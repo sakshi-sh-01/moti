@@ -28,32 +28,4 @@ class RoleController extends Controller
         }
     }
 
-    public function delete($id){
-        $role = Role::where('id',$id)->first();
-        if(isset($role)){
-            $role->delete();
-            return response()->json([
-                "message" => "Role deleted"
-            ],200);
-        }
-
-        else{
-            return response()->json([
-                "message" => "Id not found"
-            ],400);
-        }
-    }
-
-    public function list(){
-        $role = Role::get();
-        $role_count = $role->count();
-        return response()->json([
-            "message" => "Role listing",
-            "data" => array(
-                "Total count" => $role_count, 
-                "Roles" => $role
-            )
-        ]);
-    }
-
 }

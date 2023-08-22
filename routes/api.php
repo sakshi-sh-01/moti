@@ -24,64 +24,61 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->group(function () {
     //updation 
-    Route::patch('/update-users', [UserController::class, 'user_update']);
-    Route::post('/edit-profile/{id}', [UserController::class, 'edit_profile']);
+    Route::patch('/update-users', [UserController::class, 'update']);
+    Route::post('/edit-profile/{id}', [UserController::class, 'editProfile']);
 
     //Get all category of intrests
-    Route::get('/get-intrests', [IntrestController::class, 'get_intrests_details']);
+    Route::get('/get-intrests', [IntrestController::class, 'listing']);
 
     //Update user intrest
-    Route::patch('/update-user-intrest', [UserController::class, 'update_user_intrest']);
+    Route::patch('/update-user-intrest', [UserController::class, 'updateUserIntrest']);
 
     //User Trainer
-    Route::post('/connect-trainer/{id}', [TrainerController::class, 'connect_trainer']);
+    Route::post('/connect-trainer/{id}', [TrainerController::class, 'connect']);
 
     //Follow
-    Route::post('/follow-up/{id}', [FollowController::class, 'follow_up']);
-    Route::delete('/unfollow/{id}', [FollowController::class, 'unfollow_user']);
+    Route::post('/follow-up/{id}', [FollowController::class, 'follow']);
+    Route::delete('/unfollow/{id}', [FollowController::class, 'unfollow']);
 
     //Post 
-    Route::post('/create-post', [PostController::class, 'create_post']);
-    Route::patch('/update-post/{id}', [PostController::class, 'update_post']);
-    Route::delete('/delete-post/{id}', [PostController::class, 'delete_post']);
-    Route::get('/get-post/{id}', [PostController::class, 'get_post_detail']);
-    Route::get('/get-posts/{id}', [PostController::class, 'get_posts']);
+    Route::post('/create-post', [PostController::class, 'create']);
+    Route::patch('/update-post/{id}', [PostController::class, 'update']);
+    Route::delete('/delete-post/{id}', [PostController::class, 'delete']);
+    Route::get('/get-post/{id}', [PostController::class, 'postDetail']);
+    Route::get('/get-posts/{id}', [PostController::class, 'details']);
 
     //Post feed
-    Route::get('/post-feed', [PostController::class, 'get_post_feed']);
+    Route::get('/post-feed', [PostController::class, 'feed']);
 
     //Post comments
-    Route::post('/create-comment/{id}', [PostController::class, 'create_comment']);
-    Route::delete('/delete-comment/{id}', [PostController::class, 'delete_comment']);
-    Route::get('/get-comments/{id}', [PostController::class, 'get_comments']);
+    Route::post('/create-comment/{id}', [PostController::class, 'createComment']);
+    Route::delete('/delete-comment/{id}', [PostController::class, 'deleteComment']);
+    Route::get('/get-comments/{id}', [PostController::class, 'getComments']);
 
     //Post likes
-    Route::post('/like-post/{id}', [PostController::class, 'like_post']);
-    Route::delete('/unlike-post/{id}', [PostController::class, 'unlike_post']);
+    Route::post('/like-post/{id}', [PostController::class, 'like']);
+    Route::delete('/unlike-post/{id}', [PostController::class, 'unlike']);
 
     //Global search
-    Route::get('/globalSearch', [UserController::class, 'global_search']);
+    Route::get('/globalSearch', [UserController::class, 'search']);
 
     //Recently played
-    Route::get('recentlyplayed', [ActivityController::class, 'recently_played']);
+    Route::get('recentlyplayed', [ActivityController::class, 'recentlyPlayed']);
 
     //Suggestions for you
-    Route::get('suggestionPost', [ActivityController::class, 'suggestion_post']);
+    Route::get('suggestionPost', [ActivityController::class, 'suggestionPost']);
 
     //Admin middleware
     Route::middleware('admin')->group(function () {
         //Intrests
-        Route::post('/create-intrests', [IntrestController::class, 'create_intrest']);
-        Route::patch('/update-intrests/{id}', [IntrestController::class, 'update_intrest']);
-        Route::get('/get-intrests/{id}', [IntrestController::class, 'get_intrest']);
-        Route::delete('/delete-intrests/{id}', [IntrestController::class, 'delete_intrest']);
-        Route::delete('/deleteIntrests', [IntrestController::class, 'delete_intrests']);
+        Route::post('/create-intrests', [IntrestController::class, 'create']);
+        Route::patch('/update-intrests/{id}', [IntrestController::class, 'update']);
+        Route::get('/get-intrests/{id}', [IntrestController::class, 'detail']);
+        Route::delete('/delete-intrests/{id}', [IntrestController::class, 'delete']);
 
         //Users
-        Route::get('/get-user-details/{id}', [UserController::class, 'get_user_details']);
-        Route::get('/getUsers', [UserController::class, 'get_users']);
-        Route::delete('/delete-user/{id}', [UserController::class, 'delete_user']);
-        Route::delete('/delete-all-users', [UserController::class, 'delete_all_users']);
+        Route::get('/get-user-details/{id}', [UserController::class, 'details']);
+        Route::delete('/delete-user/{id}', [UserController::class, 'delete']);
     });
 });
 
@@ -90,34 +87,29 @@ Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // Forget password and reset password
-Route::post('/forget-password', [AuthController::class, 'forget_password']);
-Route::post('/reset-password', [AuthController::class, 'reset_password']);
+Route::post('/forget-password', [AuthController::class, 'forgetPassword']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 //create role
-Route::post('/create-roles', [RoleController::class, 'create_role']);
+Route::post('/create-roles', [RoleController::class, 'create']);
 
 //popular (posts)
-Route::get('popular-posts', [ActivityController::class, 'popular_post']);
+Route::get('popular-posts', [ActivityController::class, 'popularPost']);
 
 //featured post for you
-Route::get('featured-posts', [ActivityController::class, 'featured_post']);
+Route::get('featured-posts', [ActivityController::class, 'featuredPost']);
 
 //post details wrt to intrests
-Route::get('popular-post-intrests/{id}',[ActivityController::class, 'popular_post_intrest']);
-Route::get('new-post-intrests/{id}',[ActivityController::class,'new_post_intrest']);
-Route::get('trending-post-intrests/{id}',[ActivityController::class,'trending_post_intrest']);
+Route::get('popular-post-intrests/{id}',[ActivityController::class, 'popularPostIntrest']);
+Route::get('new-post-intrests/{id}',[ActivityController::class,'newPostIntrest']);
+Route::get('trending-post-intrests/{id}',[ActivityController::class,'trendingPostIntrest']);
 
 //post details wrt to users
-Route::get('new-posts', [ActivityController::class, 'new_post']);
-Route::get('trending-posts',[ActivityController::class, 'trending_post']);
+Route::get('new-posts', [ActivityController::class, 'newPost']);
+Route::get('trending-posts',[ActivityController::class, 'trendingPost']);
 
 //Dashboard
 Route::get('dashBoard',[DashboardController::class, 'dashBoard']);
 
 //popular or top trainers
-Route::get('trainer-details/{id}',[DashboardController::class, 'trainer_details']);
-
-Route::get('/roless',[RoleController::class,'role_details']);
-
-
-
+Route::get('trainer-details/{id}',[TrainerController::class, 'topTrainers']);

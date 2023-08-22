@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Follow;
-use Illuminate\Http\Request;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\UserTrainer;
 use Illuminate\Support\Facades\Auth;
 
 class TrainerController extends Controller
 {
-    public function connect_trainer($id){
+    public function connect($id){
 
         $user_t = User::query()->where('id',$id)->whereHas('role', function($query){
             $query->where('name','trainer');
@@ -41,5 +40,26 @@ class TrainerController extends Controller
         }
 
      }
+
+     public function topTrainers($id)
+    {
+        $posts = Post::query()
+            ->where('user_id', $id)
+            ->whereHas('user', function ($query) {
+                $query->where('status', 'Active');
+            })
+            ->with(['user' => function ($query) {
+                $query->select('id', 'about');
+                $query->with('Intrest', function ($query) {
+                    $query->take(2)->get();
+                });
+            }])
+            ->get();
+
+        return response()->json([
+            "success" => true,
+            "data" => $posts
+        ]);
+    }
 
 }

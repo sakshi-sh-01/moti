@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Otp;
-use App\Models\UserActivities;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -79,7 +78,7 @@ class AuthController extends Controller
         }
     }
 
-    public function forget_password(Request $request){
+    public function forgetPassword(Request $request){
         $this->validate($request,[
             "email" => "required|string"
         ]);
@@ -102,7 +101,7 @@ class AuthController extends Controller
         }
     }
 
-    public function reset_password(Request $request){
+    public function resetPassword(Request $request){
         $this->validate($request,[
             "password" => "required|string|min:6",
             "otp" => "required"

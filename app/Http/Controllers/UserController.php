@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function user_update(Request $request){
+    public function update(Request $request){
         $this->validate($request,[
             "resource" => "string",
             "experience" => "string",
@@ -90,7 +90,7 @@ class UserController extends Controller
         }
     }
 
-    public function get_user_details($id){
+    public function details($id){
         $user = User::where('id',$id)->with('userInfo')->with('usernotification')->with('userIntrest')->withCount('userIntrests')->with('posts')->first();
         if(isset($user->id)){
             return response()->json([
@@ -106,7 +106,7 @@ class UserController extends Controller
         }
     }
 
-    public function edit_profile(Request $request, $id){
+    public function editProfile(Request $request, $id){
         $this->validate($request,[
          "first_name" => "string",
          "last_name" => "string",
@@ -168,7 +168,7 @@ class UserController extends Controller
         }
      }
      
-     public function update_user_intrest(Request $request){
+     public function updateUserIntrest(Request $request){
         $this->validate($request,[
             "intrests" => "array",
         ]);

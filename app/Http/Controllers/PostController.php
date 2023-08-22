@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
 use App\Models\Follow;
-use App\Models\Likes;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\PostLike;
 use App\Models\User;
 use App\Models\UserActivities;
-use App\Models\UserInfo;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -104,7 +101,7 @@ class PostController extends Controller
         ],200);
     }
 
-    public function detail(Request $request,$id){
+    public function details(Request $request,$id){
         
         $user = User::where('id',$id)->with('userInfo')->first();
         if($user && isset($user->id)){
@@ -143,7 +140,7 @@ class PostController extends Controller
 
     }
 
-    public function get_post_detail( $id){
+    public function postDetail( $id){
         $post = Post::where('id',$id)->first();
         if(isset($post)){
             $posts = Post::where('id',$id)->withCount('comments')->with('comments')->first();
@@ -166,7 +163,7 @@ class PostController extends Controller
         }
     }
 
-    public function create_comment(Request $request, $id){
+    public function createComment(Request $request, $id){
         $this->validate($request,[
             "comment" => "string"
         ]);
@@ -185,7 +182,7 @@ class PostController extends Controller
         ],200);
     }
 
-    public function delete_comment($id){
+    public function deleteComment($id){
         $comment = PostComment::where('post_id',$id)->exists();
         if($comment){
             $post_comment = PostComment::where('user_id',Auth::user()->id)->with('post')->first();
@@ -209,7 +206,7 @@ class PostController extends Controller
         }
     }
 
-    public function get_comments($id){
+    public function getComments($id){
         $post_comment = PostComment::where('post_id',$id)->exists();
         if($post_comment){
             $comments = PostComment::where('post_id',$id)->get();

@@ -21,7 +21,6 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
-        // echo "...." . $mostPopularTrainerId;
 
         $userDetails = User::whereIn('id', $mostPopularTrainerId)->with('role')
             ->get();
@@ -38,24 +37,5 @@ class DashboardController extends Controller
 
     }
 
-    public function topTrainers($id)
-    {
-        $posts = Post::query()
-            ->where('user_id', $id)
-            ->whereHas('user', function ($query) {
-                $query->where('status', 'Active');
-            })
-            ->with(['user' => function ($query) {
-                $query->select('id', 'about');
-                $query->with('Intrest', function ($query) {
-                    $query->take(2)->get();
-                });
-            }])
-            ->get();
-
-        return response()->json([
-            "success" => true,
-            "data" => $posts
-        ]);
-    }
+    
 }
