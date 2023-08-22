@@ -16,7 +16,7 @@ class PostController extends Controller
     public function create(Request $request){
         $this->validate($request,[
             "type" => "string|required",
-            "file" => "string",
+            "file" => "file|required|mimes:png,jpg,jpeg,mp3,mp4",
             "title" => "string",
             "duration" => "string|required_if:type,video",
             "intrest_id" => "string"
