@@ -83,7 +83,7 @@ class AuthController extends Controller
             "email" => "required|string"
         ]);
 
-        $user = User::where('email',$request->email)->where('status','active')->first();
+        $user = User::where('email',$request->email)->where('status','Active')->first();
         if(isset($user->id)){
             $otp = rand(1000,9999);
             $rs= new Otp;
@@ -109,7 +109,7 @@ class AuthController extends Controller
 
         $otp = otp::where('otp',$request->otp)->first();
         if(isset($otp->email)){
-            $user = User::where('email',$otp->email)->where('status','active')->first();
+            $user = User::where('email',$otp->email)->where('status','Active')->first();
             $user->password = Hash::make($request->password);
             $user->save();
             return response()->json([
